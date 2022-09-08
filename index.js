@@ -1,7 +1,7 @@
 let productos = [
                 {id:1,nombre:"The Lord of The Rings", categoria:"Fantasia", precio: 130, imagen:"./media/lotr.jpg"},
                 {id:2,nombre:"Mistborn", categoria:"Fantasia", precio: 122, imagen:"./media/mistborn.jpg"},
-                {id:3,nombre:"Bajo la Misma Estrella", categoria:"Romance", precio: 73, imagen:"./media/2m.png"},
+                {id:3,nombre:"Bajo la Misma Estrella", categoria:"Romance", precio: 73, imagen:"./media/star.png"},
                 {id:4,nombre:"Dune", categoria:"SciFi", precio: 93, imagen:"./media/dune.jpg"},
                 {id:5,nombre:"IT", categoria:"Terror", precio: 68, imagen:"./media/it.jpg"},
                 {id:6,nombre:"Death Note", categoria:"Otros", precio: 40, imagen:"./media/ded.jpg"},
@@ -15,7 +15,7 @@ class Tienda{
 
         for(const producto of productos){
             let contenedor = document.createElement("div");
-            contenedor.classList.add("card","col-sm-12");
+            contenedor.classList.add("card","col-sm-12","animacion");
             contenedor.style.width = "18rem";
 
             contenedor.innerHTML = `    <img src=${producto.imagen} class="card-img-top" alt="${producto.nombre}>
@@ -23,7 +23,6 @@ class Tienda{
                                             <h5 class="card-title">${producto.nombre}</h5>
                                             <h6 class="card-title">Categoria: ${producto.categoria}</h6>
                                             <h6 class="card-title">Precio: ${producto.precio}</h6>
-                                            <p class="card-text">${producto.resumen}</p>
                                         </div>`
             let padre = document.querySelector(".contenedor");
 

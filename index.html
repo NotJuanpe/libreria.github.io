@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Bootstrap demo</title>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">  
     <link rel="stylesheet" href="./css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-  </head>
+
+</head>
   <body>
 
 
@@ -25,27 +25,35 @@
 
     <main>
 
-        <section>
+        <section class="buscar">
 
             <div class="inputs">
                 <div class="minimo">
+                    <h4>Precio Minimo</h4>
                     <input type="text" name="Minimo" id="min" value="0">
                 </div>
                 <div class="maximo">
+                    <h4>Precio Maximo</h4>
                     <input type="text" name="Maximo" id="max" value = "10000">
                 </div>
             </div>
             <div class="boton" onclick="tienda.filtrarPrecio(productos)">
-                <button>Buscar
-
-                </button>
+                <button type="button" class="btn btn-light">Buscar</button>
             </div>
         </section>
 
-        <section class="contenedor grid"></section>
+        <section class="contenedor row justify-content-center">
+
+        </section>
     </main>
 
-    <footer></footer>
+    <footer>
+        <ul>
+          <li><a href="https://api.whatsapp.com/send?phone=+54 1131008005&text=Hola, me gustaria hacer una consulta!" target="_blank" ><img src="/media/whats_app_.png" alt="Icono de whatsapp"></a></li>
+          <li><a href="https://www.instagram.com/juannpe/?hl=es-la" target="_blank" ><img src="/media/instagram_.png" alt="Icono de instagram"></a></li>
+          <li><a href="https://www.linkedin.com/in/juan-pedro-rodriguez-0125a8216/" target="_blank" ><img src="/media/linked_in_.png" alt="Icono de linkedin"></a></li>
+        </ul>
+      </footer>
 
     <script src="./index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
