@@ -1,12 +1,12 @@
 let productos = [
-                {id:1,nombre:"The Lord of The Rings", categoria:"Fantasia", precio: 130, imagen:"",resumen:""},
-                {id:1,nombre:"Mistborn", categoria:"Fantasia", precio: 122, imagen:"",resumen:""},
-                {id:1,nombre:"Bajo la Misma Estrella", categoria:"Romance", precio: 73, imagen:"",resumen:""},
-                {id:1,nombre:"Dune", categoria:"SciFi", precio: 93, imagen:"",resumen:""},
-                {id:1,nombre:"IT", categoria:"Terror", precio: 68, imagen:"",resumen:""},
-                {id:1,nombre:"Death Note", categoria:"Otros", precio: 40, imagen:"",resumen:""},
-                {id:1,nombre:"A Dos Metros de Ti", categoria:"Romance", precio: 64, imagen:"",resumen:""},
-                {id:1,nombre:"Squadron", categoria:"SciFi", precio: 72, imagen:"",resumen:""},
+                {id:1,nombre:"The Lord of The Rings", categoria:"Fantasia", precio: 130, imagen:"./media/lotr.jpg"},
+                {id:2,nombre:"Mistborn", categoria:"Fantasia", precio: 122, imagen:"./media/mistborn.jpg"},
+                {id:3,nombre:"Bajo la Misma Estrella", categoria:"Romance", precio: 73, imagen:"./media/2m.png"},
+                {id:4,nombre:"Dune", categoria:"SciFi", precio: 93, imagen:"./media/dune.jpg"},
+                {id:5,nombre:"IT", categoria:"Terror", precio: 68, imagen:"./media/it.jpg"},
+                {id:6,nombre:"Death Note", categoria:"Otros", precio: 40, imagen:"./media/ded.jpg"},
+                {id:7,nombre:"A Dos Metros de Ti", categoria:"Romance", precio: 64, imagen:"./media/2m.png"},
+                {id:8,nombre:"Squadron", categoria:"SciFi", precio: 72, imagen:"./media/sander.jpg"},
                 ]
 
 class Tienda{
