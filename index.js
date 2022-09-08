@@ -39,10 +39,15 @@ class Tienda{
 
     filtrarCategoria(productos,categorias){
 
-        const filtrado = productos.filter((filtro) => filtro.categoria.includes(categorias));
-    
-        this.vaciarProductos();
-        this.agregarProductos(filtrado);
+        if(categorias == "Home"){
+            this.agregarProductos(productos);
+        }else{ 
+            const filtrado = productos.filter((filtro) => filtro.categoria.includes(categorias));
+            this.vaciarProductos();
+            this.agregarProductos(filtrado);
+        }
+
+
 
     }
 
