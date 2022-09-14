@@ -141,6 +141,11 @@ class Tienda{
 
             alert(`Su total es de $${this.precioFinal(carrito)}`)
             alert("No es necesario que nos diga donde vive ya lo sabemos")
+
+            let padre = document.querySelector(".contenedor_carrito");
+            while (padre.firstChild) {
+                padre.removeChild(padre.firstChild);
+            }
             
 
         }
