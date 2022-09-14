@@ -71,4 +71,55 @@ footer ul :hover {
   transition: all 0.5s;
 }
 
+.carrito_compras {
+  padding: 5%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.carrito_compras h2, .carrito_compras h3 {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.col-6 div {
+  display: flex;
+  align-items: center;
+}
+.col-6 div img {
+  margin-right: 3%;
+  max-width: 80px;
+  border-radius: 15px;
+}
+.col-6 div img:hover {
+  transform: scale(2);
+  transition: all 0.2s;
+}
+
+.col-2 {
+  display: flex;
+  align-items: center;
+}
+
+.col-3, .col-1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.lista {
+  margin: 3%;
+}
+
+.id {
+  display: none;
+}
+
+.precio_final {
+  display: flex;
+  justify-content: start;
+  margin-left: 5%;
+}
+
 /*# sourceMappingURL=style.css.map */
