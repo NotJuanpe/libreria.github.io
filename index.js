@@ -75,6 +75,7 @@ class Tienda{
         const producto = productos.find(producto => producto.id === id);
         carrito.push(producto);
         this.agregarCarrito(producto);
+        this.guardaEnStorage(producto)
     }
 
     agregarCarrito(producto){
@@ -121,7 +122,11 @@ class Tienda{
 
             const botonClickeado = event.target;
             botonClickeado.closest('.lista').remove()
-            console.log(carrito)
+            
+            localStorage.removeItem(producto.id);
+
+
+
         }
 
         precioFinal(productos){
@@ -147,9 +152,37 @@ class Tienda{
                 padre.removeChild(padre.firstChild);
             }
             
+            localStorage.clear()
 
         }
 
+        guardaEnStorage(producto){
+            const guardarLocal = (clave,valor) => {localStorage.setItem(clave,valor)}   
+            guardarLocal(producto.id,JSON.stringify(producto))
+        }
+
+        recargarCarrito(){
+            let carrito = []
+            if(localStorage.length != 0){
+                alert('Hay un carrito previo');
+                let cargar = prompt('Desea recargar el carrito viejo? Introduzca Si (Especificamente Si) para recargarlo');
+
+                if(cargar == 'Si'){
+                    Object.keys(localStorage).forEach(function(key){
+                        
+                        let objeto = JSON.parse(localStorage.getItem(key));
+                        carrito.push(objeto)
+                     });
+                    for(const producto of carrito){
+                        this.agregarCarrito(producto)
+                    }
+                }
+                
+            }else{
+                alert('Bienvenido')
+            }
+           
+        }
         
 }
 

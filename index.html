@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./css/style.css">
 
 </head>
-  <body>
+  <body onload="tienda.recargarCarrito()">
 
 
     <header>
@@ -65,7 +65,7 @@
       </section>
 
       <div class="pagar d-flex justify-content-center">
-        <button type="button" class="btn btn-light " onclick="tienda.pagar()" >Pagar</button>
+        <button type="button" class="btn btn-light " onclick="tienda.pagar(carrito)" >Pagar</button>
         </div>
 
       </div>
