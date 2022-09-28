@@ -163,25 +163,31 @@ class Tienda{
 
         recargarCarrito(){
             let carrito = []
-            if(localStorage.length != 0){
-                alert('Hay un carrito previo');
-                let cargar = prompt('Desea recargar el carrito viejo? Introduzca Si (Especificamente Si) para recargarlo');
 
-                if(cargar == 'Si'){
-                    Object.keys(localStorage).forEach(function(key){
-                        
-                        let objeto = JSON.parse(localStorage.getItem(key));
-                        carrito.push(objeto)
-                     });
-                    for(const producto of carrito){
-                        this.agregarCarrito(producto)
-                    }
-                }
-                
-            }else{
-                alert('Bienvenido')
-            }
+            const local = (localStorage.length != 0) ? true : false
+            
+            local ? this.local(carrito) : alert('Bienvenido');
            
+        }
+
+        local(productos){
+
+            alert('Hay un carrito previo');
+            let cargar = prompt('Desea recargar el carrito viejo? Introduzca Si (Especificamente Si) para recargarlo');
+
+            const cargardo = (cargar == 'Si') ? true : false;
+
+            if(cargardo){
+                Object.keys(localStorage).forEach(function(key){
+                    
+                    let objeto = JSON.parse(localStorage.getItem(key));
+                    carrito.push(objeto)
+                 });
+                for(const producto of carrito){
+                    this.agregarCarrito(producto)
+                }
+            }
+            
         }
         
 }
