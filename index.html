@@ -9,17 +9,17 @@
     <link rel="stylesheet" href="./css/style.css">
 
 </head>
-  <body onload="tienda.recargarCarrito()">
+  <body>
 
 
     <header>
         <ul>
-            <li class="home"><a href="#" onclick=" tienda.filtrarCategoria(productos,'Home') ">Home</a></li>
-            <li class="fantasia"><a href="#" onclick=" tienda.filtrarCategoria(productos,'Fantasia') ">Fantasia</a></li>
-            <li class="terror"><a href="#" onclick=" tienda.filtrarCategoria(productos,'Terror') ">Terror</a></li>
-            <li class="scifi"><a href="#" onclick=" tienda.filtrarCategoria(productos,'SciFi') ">Science Fiction</a></li>
-            <li class="romance"><a href="#" onclick=" tienda.filtrarCategoria(productos,'Romance') ">Romance</a></li>
-            <li class="otros"><a href="#" onclick=" tienda.filtrarCategoria(productos,'Otros') ">Otros</a></li>
+            <li class="home"><a href="#" class="nav_cat">Home</a></li>
+            <li class="fantasia"><a href="#" class="nav_cat">Fantasia</a></li>
+            <li class="terror"><a href="#" class="nav_cat">Terror</a></li>
+            <li class="scifi"><a href="#" class="nav_cat">Science Fiction</a></li>
+            <li class="romance"><a href="#" class="nav_cat">Romance</a></li>
+            <li class="otros"><a href="#" class="nav_cat">Otros</a></li>
         </ul>
     </header>
 
@@ -37,8 +37,8 @@
                     <input type="text" name="Maximo" id="max" value = "10000">
                 </div>
             </div>
-            <div class="boton" onclick="tienda.filtrarPrecio(productos)">
-                <button type="button" class="btn btn-light">Buscar</button>
+            <div class="boton buscar">
+                <button type="button" class="btn btn-light btn_busca">Buscar</button>
             </div>
         </section>
 
@@ -65,7 +65,7 @@
       </section>
 
       <div class="pagar d-flex justify-content-center">
-        <button type="button" class="btn btn-light " onclick="tienda.pagar(carrito)" >Pagar</button>
+        <button type="button" class="btn btn-light btn_pagar">Pagar</button>
         </div>
 
       </div>
@@ -80,6 +80,8 @@
         </ul>
       </footer>
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="./index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
   </body>

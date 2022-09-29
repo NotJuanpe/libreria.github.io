@@ -2,11 +2,11 @@ let productos = [
                 {id:1,nombre:"The Lord of The Rings", categoria:"Fantasia", precio: 130, imagen:"./media/lotr.jpg"},
                 {id:2,nombre:"Mistborn", categoria:"Fantasia", precio: 122, imagen:"./media/mistborn.jpg"},
                 {id:3,nombre:"Bajo la Misma Estrella", categoria:"Romance", precio: 73, imagen:"./media/star.png"},
-                {id:4,nombre:"Dune", categoria:"SciFi", precio: 93, imagen:"./media/dune.jpg"},
+                {id:4,nombre:"Dune", categoria:"Science Fiction", precio: 93, imagen:"./media/dune.jpg"},
                 {id:5,nombre:"IT", categoria:"Terror", precio: 68, imagen:"./media/it.jpg"},
                 {id:6,nombre:"Death Note", categoria:"Otros", precio: 40, imagen:"./media/ded.jpg"},
                 {id:7,nombre:"A Dos Metros de Ti", categoria:"Romance", precio: 64, imagen:"./media/2m.png"},
-                {id:8,nombre:"Squadron", categoria:"SciFi", precio: 72, imagen:"./media/sander.jpg"},
+                {id:8,nombre:"Squadron", categoria:"Science Fiction", precio: 72, imagen:"./media/sander.jpg"},
                 ]
 
 let carrito = []
@@ -26,11 +26,11 @@ class Tienda{
                                             <h6 class="card-title">Categoria: ${producto.categoria}</h6>
                                             <h6 class="card-title">Precio: <strong>$${producto.precio}</strong></h6>
                                             <h6 class="card-title id">Id: ${producto.id}</h6>
-                                            <div class="boton_carrito" onclick="tienda.agregadosAlCarrito(${producto.id},productos,carrito)">
-                                                <button type="button" class="btn btn-light">Add</button>
+                                            <div class="boton_carrito">
+                                                <button type="button" class="btn btn-light btn_carrito" data-product-id="${producto.id}">Add</button>
                                             </div>
                                         </div>`
-            let padre = document.querySelector(".contenedor");
+            let padre = $(".contenedor")[0];
 
             padre.appendChild(contenedor);
         }
@@ -43,9 +43,10 @@ class Tienda{
         }
     }
 
-    filtrarCategoria(productos,categorias){
+    filtrarCategoria(categorias){
 
         if(categorias == "Home"){
+            this.vaciarProductos();
             this.agregarProductos(productos);
         }else{ 
             const filtrado = productos.filter((filtro) => filtro.categoria.includes(categorias));
@@ -54,7 +55,7 @@ class Tienda{
         }
     }
 
-    filtrarPrecio(productos){
+    filtrarPrecio(){
         var minimo = document.querySelector("#min").value;
         var maximo = document.querySelector("#max").value;
         var valoresAceptados = /^[0-9]+$/;
@@ -71,8 +72,9 @@ class Tienda{
 
     }
 
-    agregadosAlCarrito(id,productos,carrito){
-        const producto = productos.find(producto => producto.id === id);
+    agregadosAlCarrito(id){
+        console.log(id)
+        const producto = productos.find(producto => producto.id == id);
         carrito.push(producto);
         this.agregarCarrito(producto);
         this.guardaEnStorage(producto)
@@ -101,8 +103,8 @@ class Tienda{
 
             let contenedor4 = document.createElement("div");
             contenedor4.classList.add("col-1");
-            contenedor4.innerHTML=`<div onclick="tienda.borrarItem(${producto.id},productos,carrito,event)">
-                                        <button type="button" class="btn btn-danger eliminar">X</button>
+            contenedor4.innerHTML=`<div>
+                                        <button type="button" class="btn btn-danger eliminar" data-product-id="${producto.id}">X</button>
                                     </div>`
             
             row.appendChild(contenedor1);
@@ -112,20 +114,19 @@ class Tienda{
 
             let padre = document.querySelector(".contenedor_carrito");
             padre.appendChild(row);
-            console.log(carrito)
+
+            $('.btn-danger').on('click', e => { 
+                this.borrarItem(producto.id)
+                e.currentTarget.closest('.lista').remove()
+            })
         }
 
-        borrarItem(id,productos,carrito,event){
+        borrarItem(id){
 
-            const producto = productos.find(producto => producto.id === id);
+            const producto = productos.find(producto => producto.id == id);
             carrito.splice(producto,1)
-
-            const botonClickeado = event.target;
-            botonClickeado.closest('.lista').remove()
             
             localStorage.removeItem(producto.id);
-
-
 
         }
 
@@ -170,12 +171,12 @@ class Tienda{
            
         }
 
-        local(productos){
+        local(){
 
             alert('Hay un carrito previo');
-            let cargar = prompt('Desea recargar el carrito viejo? Introduzca Si (Especificamente Si) para recargarlo');
+            let cargar = prompt('Desea recargar el carrito viejo? Introduzca Si (Especificamente Si) para recargarlo')+'';
 
-            const cargardo = (cargar == 'Si') ? true : false;
+            const cargardo = (cargar.toLowerCase() == 'si') ? true : false;
 
             if(cargardo){
                 Object.keys(localStorage).forEach(function(key){
@@ -189,8 +190,18 @@ class Tienda{
             }
             
         }
+
+        funcionalidad(){
+
+            $('.nav_cat').on('click', e => this.filtrarCategoria(e.currentTarget.innerText))
+            $('.btn_carrito').on('click', e => this.agregadosAlCarrito(e.currentTarget.dataset.productId))
+            $('.btn_busca').on('click' , e => this.filtrarPrecio())
+            $('.btn_pagar').on('click' , e => this.pagar(carrito))
+            $(document).on('load',this.recargarCarrito())
+        }
         
 }
 
 var tienda = new Tienda();
 tienda.agregarProductos(productos);
+tienda.funcionalidad();
