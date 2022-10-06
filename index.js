@@ -1,19 +1,11 @@
-let productos = [
-                {id:1,nombre:"The Lord of The Rings", categoria:"Fantasia", precio: 130, imagen:"./media/lotr.jpg"},
-                {id:2,nombre:"Mistborn", categoria:"Fantasia", precio: 122, imagen:"./media/mistborn.jpg"},
-                {id:3,nombre:"Bajo la Misma Estrella", categoria:"Romance", precio: 73, imagen:"./media/star.png"},
-                {id:4,nombre:"Dune", categoria:"Science Fiction", precio: 93, imagen:"./media/dune.jpg"},
-                {id:5,nombre:"IT", categoria:"Terror", precio: 68, imagen:"./media/it.jpg"},
-                {id:6,nombre:"Death Note", categoria:"Otros", precio: 40, imagen:"./media/ded.jpg"},
-                {id:7,nombre:"A Dos Metros de Ti", categoria:"Romance", precio: 64, imagen:"./media/2m.png"},
-                {id:8,nombre:"Squadron", categoria:"Science Fiction", precio: 72, imagen:"./media/sander.jpg"},
-                ]
 
-let carrito = []
 
 class Tienda{
 
-    agregarProductos(productos){
+    productos = []
+    carrito = []
+
+    async agregarProductos(productos = []){
 
         for(const producto of productos){
             let contenedor = document.createElement("div");
@@ -24,35 +16,21 @@ class Tienda{
                                         <div class = "card-body">
                                             <h5 class="card-title">${producto.nombre}</h5>
                                             <h6 class="card-title">Categoria: ${producto.categoria}</h6>
-                                            <h6 class="card-title">Precio: <strong>$${producto.precio}</strong></h6>
+                                            <h6 class="card-title">Precio: <strong>$${producto.precio}</strong></h6> 
                                             <h6 class="card-title id">Id: ${producto.id}</h6>
                                             <div class="boton_carrito">
                                                 <button type="button" class="btn btn-light btn_carrito" data-product-id="${producto.id}">Add</button>
                                             </div>
                                         </div>`
             let padre = $(".contenedor")[0];
-
             padre.appendChild(contenedor);
         }
+
+        $('.btn_carrito').on('click', e => this.agregadosAlCarrito(e.currentTarget.dataset.productId))
     }
 
-    vaciarProductos(){
-        let padre = document.querySelector(".contenedor");
-        while (padre.firstChild) {
-            padre.removeChild(padre.firstChild);
-        }
-    }
-
-    filtrarCategoria(categorias){
-
-        if(categorias == "Home"){
-            this.vaciarProductos();
-            this.agregarProductos(productos);
-        }else{ 
-            const filtrado = productos.filter((filtro) => filtro.categoria.includes(categorias));
-            this.vaciarProductos();
-            this.agregarProductos(filtrado);
-        }
+    vaciarProductos(){ 
+        document.querySelector('#contenedor_libros').innerHTML = ''
     }
 
     filtrarPrecio(){
@@ -60,22 +38,32 @@ class Tienda{
         var maximo = document.querySelector("#max").value;
         var valoresAceptados = /^[0-9]+$/;
 
-        if(minimo == "") minimo = 0;
-        if(maximo == "") maximo = 10000;
+        minimo ? parseFloat(minimo) : 0;
+        maximo ? parseFloat(maximo) : 10000;
 
         if(maximo.match(valoresAceptados) && minimo.match(valoresAceptados)){
-            const filtrado = productos.filter((filtro) => (filtro.precio <= maximo) && (filtro.precio >= minimo));
+            const filtrado = this.productos.filter((filtro) => {
+                let precio = parseFloat(filtro.precio)
+                if (precio > maximo) return;
+                if (precio < minimo) return;
+
+                return filtro
+            });
+            console.log(filtrado)
             this.vaciarProductos();
             this.agregarProductos(filtrado);
         }
+
+        
+
 
 
     }
 
     agregadosAlCarrito(id){
         console.log(id)
-        const producto = productos.find(producto => producto.id == id);
-        carrito.push(producto);
+        const producto = this.productos.find(producto => producto.id == id);
+        this.carrito.push(producto);
         this.agregarCarrito(producto);
         this.guardaEnStorage(producto)
     }
@@ -123,19 +111,20 @@ class Tienda{
 
         borrarItem(id){
 
-            const producto = productos.find(producto => producto.id == id);
-            carrito.splice(producto,1)
+            const producto = this.productos.find(producto => producto.id == id);
+            this.carrito.splice(producto,1)
             
             localStorage.removeItem(producto.id);
 
         }
 
-        precioFinal(productos){
+        precioFinal(){
 
             var precio = 0;
             
-            for(const producto of productos){
-                precio += producto.precio
+            for(const producto of this.carrito){
+                console.log(precio)
+                precio += parseFloat(producto.precio)
             }
 
             return precio
@@ -145,7 +134,7 @@ class Tienda{
 
         pagar(){
 
-            alert(`Su total es de $${this.precioFinal(carrito)}`)
+            alert(`Su total es de $${this.precioFinal()}`)
             alert("No es necesario que nos diga donde vive ya lo sabemos")
 
             let padre = document.querySelector(".contenedor_carrito");
@@ -154,6 +143,7 @@ class Tienda{
             }
             
             localStorage.clear()
+            this.carrito = []
 
         }
 
@@ -182,26 +172,85 @@ class Tienda{
                 Object.keys(localStorage).forEach(function(key){
                     
                     let objeto = JSON.parse(localStorage.getItem(key));
-                    carrito.push(objeto)
+                    this.carrito.push(objeto)
                  });
-                for(const producto of carrito){
+                for(const producto of this.carrito){
                     this.agregarCarrito(producto)
                 }
             }
             
         }
 
-        funcionalidad(){
+        async funcionalidad(){
 
             $('.nav_cat').on('click', e => this.filtrarCategoria(e.currentTarget.innerText))
-            $('.btn_carrito').on('click', e => this.agregadosAlCarrito(e.currentTarget.dataset.productId))
             $('.btn_busca').on('click' , e => this.filtrarPrecio())
-            $('.btn_pagar').on('click' , e => this.pagar(carrito))
+            $('.btn_pagar').on('click' , e => this.pagar(this.carrito))
             $(document).on('load',this.recargarCarrito())
         }
+
+        async obtenerApi(){
+            var myHeaders = new Headers();
+            myHeaders.append("X-RapidAPI-Key", "bd3fc8722cmshc00419a393c679cp18243fjsnf5422668b624");
+            myHeaders.append("X-RapidAPI-Host", "bookshelves.p.rapidapi.com");
+
+            var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+            };
+
+            fetch("https://bookshelves.p.rapidapi.com/books", requestOptions)
+            .then(response => response.text())
+            .then(result => 
+                 JSON.parse(result).Books)
+            .then(libros => {
+                for(const libro of libros){
+                    const {id,title,price,imgUrl} = libro;
+                    
+                    let newPrice = price.slice(1,-1)
+
+                    let book = new Libro(id,title,newPrice,imgUrl)
+
+                    
+                    
+                    this.productos.push(book)
+                    
+                }
+            })
+            .then(resp =>{
+                this.agregarProductos(this.productos)
+            })
+        }
+
+
         
 }
 
-var tienda = new Tienda();
-tienda.agregarProductos(productos);
-tienda.funcionalidad();
+class Libro{
+    id;
+    nombre;
+    categoria;
+    precio;
+    imagen;
+
+    constructor(id,nombre,precio,imagen){
+
+        this.id = id;
+        this.nombre = nombre;
+        this.categoria = 'Api';
+        this.precio = precio;
+        this.imagen = imagen;
+
+    }
+}
+
+
+const main = async()=>{
+    var tienda = new Tienda();
+    await tienda.funcionalidad();
+    await tienda.obtenerApi();
+    await tienda.agregarProductos(this.productos);
+}
+
+main();
