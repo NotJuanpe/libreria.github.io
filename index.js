@@ -250,7 +250,8 @@ const main = async()=>{
     var tienda = new Tienda();
     await tienda.funcionalidad();
     await tienda.obtenerApi();
-    await tienda.agregarProductos(this.productos);
+    await tienda.agregarProductos(this.productos)
+
 }
 
 main();
